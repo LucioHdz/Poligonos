@@ -1,9 +1,11 @@
 from Algorithms import dda_algrithm
 
 
+
 def angulo(n):
     alfa = 180 * (n - 2)
     return alfa//n
+
 
 
 def listar(puntos,funcion):
@@ -16,6 +18,7 @@ def listar(puntos,funcion):
     n = funcion(puntos[fin][0],puntos[fin][1],puntos[0][0],puntos[0][1])
     coordenadas.append(n)
     return coordenadas
+
 
 if __name__ == '__main__':
     a = angulo(5)

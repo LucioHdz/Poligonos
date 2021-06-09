@@ -38,69 +38,45 @@ def dda_algrithm(x,y,x2,y2):
         y_vars.append(n)
     return x_vars,y_vars
 
+# ESTE ALGORITMO SE PUEDE DESCARGAR DESDE PIP 
+#LINK DE PYPI https://pypi.org/project/bresenham/
 
-def bresenham_algrithm(x,y,x2,y2):
-    """Algoritmo de trazos Bresenham
-    Args:
-        x (integer): posicion x coordenada 1
-        y (integer): posicion y coordenada 1
-        x2 (integer): posicion x coordenada 2
-        y2 (integer): posicion y coordenada 2
-    Returns:
-        List(int): Listas x,y coordinadas
+
+def bresenham_algrithm(x0, y0, x1, y1):
+    """Yield integer coordinates on the line from (x0, y0) to (x1, y1).
+
+    Input coordinates should be integers.
+
+    The result will contain both the start and the end point.
     """
-    dx = abs(x2 -x)
-    dy = abs(y2 -y)
-    p = 2 * dy -dx
-    x_vars=[]
-    y_vars=[]
-    if dx !=0:
-        if x<x2:
-            while x <= x2:
-                x_vars.append(x)
-                y_vars.append(y)   
-                x += 1
-                if p<0:
-                    p = p + 2 * dy
-                else:
-                    p = p + (2 * dy) - (2 * dx)
-                    if y< y2:
-                        y += 1
-                    elif y>y2:
-                        y -= 1
-        else:
-            while x >= x2:
-                x_vars.append(x)
-                y_vars.append(y)   
-                x -= 1
-                if p<0:
-                    p = p + 2 * dy
-                else:
-                    p = p + (2 * dy) - (2 * dx)
-                    if y< y2:
-                        y += 1
-                    elif y>y2:
-                        y -= 1
+    dx = x1 - x0
+    dy = y1 - y0
+    xvars = []
+    yvars = []
+
+    xsign = 1 if dx > 0 else -1
+    ysign = 1 if dy > 0 else -1
+
+    dx = abs(dx)
+    dy = abs(dy)
+
+    if dx > dy:
+        xx, xy, yx, yy = xsign, 0, 0, ysign
     else:
-        if y<=y2:
-            while y <= y2:
-                x_vars.append(x)
-                y_vars.append(y)
-                if p<0:
-                    p = p + 2 * dy
-                else:
-                    p = p + (2 * dy) - (2 * dx)
-                    y += 1
-        else:
-            while y >= y2:
-                x_vars.append(x)
-                y_vars.append(y)
-                if p<0:
-                    p = p + 2 * dy
-                else:
-                    p = p + (2 * dy) - (2 * dx)
-                    y -= 1
-    return x_vars,y_vars
+        dx, dy = dy, dx
+        xx, xy, yx, yy = 0, ysign, xsign, 0
+
+    D = 2*dy - dx
+    y = 0
+
+    for x in range(dx + 1):
+        xvars.append(x0 + x*xx + y*yx)
+        yvars.append(y0 + x*xy + y*yy)
+        if D >= 0:
+            y += 1
+            D -= 2*dx
+        D += 2*dy
+    return xvars,yvars
 
 if __name__ == '__main__':
     print(bresenham_algrithm(0,0,10,0))
